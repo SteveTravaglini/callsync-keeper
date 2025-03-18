@@ -165,3 +165,12 @@ export interface GeneratedContent {
   createdAt: string;
   variables: Record<string, any>; // Actual values used for variables
 }
+
+// Add the missing TemplateType enum
+export enum TemplateType {
+  PROPOSAL = 'proposal',
+  EXECUTIVE_SUMMARY = 'executive_summary',
+  ROI_ANALYSIS = 'roi_analysis', 
+  IMPLEMENTATION_PLAN = 'implementation_plan',
+  CUSTOM = 'custom'
+}
