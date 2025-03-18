@@ -6,8 +6,9 @@ import Header from '@/components/Header';
 import EmptyState from '@/components/EmptyState';
 import RecordingCard from '@/components/RecordingCard';
 import ExtensionPreview from '@/components/ExtensionPreview';
+import CrmIntegrationPreview from '@/components/CrmIntegration/CrmIntegrationPreview';
 import { Recording } from '@/lib/types';
-import { PlusIcon, MicIcon, Clock, ListFilter } from 'lucide-react';
+import { PlusIcon, MicIcon, Clock, ListFilter, Database } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // Mock data - in a real app, this would come from an API
@@ -47,6 +48,7 @@ const mockRecordings: Recording[] = [
 const Index = () => {
   const [recordings, setRecordings] = useState<Recording[]>(mockRecordings);
   const [showExtensionPreview, setShowExtensionPreview] = useState(false);
+  const [showCrmPreview, setShowCrmPreview] = useState(false);
   
   const hasRecordings = recordings.length > 0;
   
@@ -120,6 +122,16 @@ const Index = () => {
               >
                 {showExtensionPreview ? "Hide Extension Preview" : "Show Extension Preview"}
               </Button>
+              
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="rounded-full px-6"
+                onClick={() => setShowCrmPreview(!showCrmPreview)}
+              >
+                <Database size={18} className="mr-2" />
+                {showCrmPreview ? "Hide CRM Integration" : "Show CRM Integration"}
+              </Button>
             </motion.div>
           </div>
         </motion.div>
@@ -132,6 +144,17 @@ const Index = () => {
             className="mb-12"
           >
             <ExtensionPreview />
+          </motion.div>
+        )}
+        
+        {showCrmPreview && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-12"
+          >
+            <CrmIntegrationPreview />
           </motion.div>
         )}
         
