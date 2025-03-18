@@ -9,4 +9,7 @@ export const formSchema = z.object({
   scheduleTime: z.string().optional(),
   calendarIntegration: z.boolean().default(false),
   autoJoin: z.boolean().default(false),
+  // New CRM fields
+  syncToCrm: z.boolean().default(false),
+  crmType: z.enum(['salesforce', 'hubspot', 'none']).default('none'),
 });

@@ -51,3 +51,44 @@ export interface CalendarEvent {
   meetingUrl?: string;
   meetingType?: MeetingType;
 }
+
+// New CRM Integration Types
+export type CrmType = 'salesforce' | 'hubspot' | 'none';
+
+export interface CrmIntegrationConfig {
+  crmType: CrmType;
+  enabled: boolean;
+  apiKey?: string;
+  mappings: CrmFieldMapping[];
+  autoSyncTranscripts: boolean;
+  autoSyncRecordings: boolean;
+  syncNotes: boolean;
+}
+
+export interface CrmFieldMapping {
+  crmField: string;
+  crmFieldType: 'standard' | 'custom';
+  sourceField: 'title' | 'date' | 'duration' | 'transcript' | 'summary' | 'action_items' | 'key_points';
+  isRequired: boolean;
+  defaultValue?: string;
+}
+
+export interface CrmSyncResult {
+  success: boolean;
+  recordId?: string;
+  error?: string;
+  syncedFields: string[];
+}
+
+export interface TranscriptInsight {
+  summary: string;
+  keyPoints: string[];
+  actionItems: string[];
+  sentimentScore: number; // -1 to 1, negative to positive
+  nextSteps?: string;
+  topics: {
+    name: string;
+    occurrences: number;
+    sentiment: number;
+  }[];
+}
