@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -81,22 +82,22 @@ const Index = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="mb-12"
+          className="mb-16"
         >
           <div className="max-w-3xl mx-auto text-center">
             <motion.h1 
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="text-4xl font-display font-medium mb-4"
+              className="text-4xl md:text-5xl font-display font-medium mb-4 tracking-tight"
             >
-              Call Recording & Transcription
+              Call Recording <span className="text-primary">&</span> Transcription
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-xl mx-auto"
+              className="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed"
             >
               Record your meetings and get instant transcripts to keep track of important discussions.
             </motion.p>
@@ -105,10 +106,10 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="flex flex-wrap justify-center gap-4"
+              className="flex flex-wrap justify-center gap-3"
             >
               <Link to="/join-call">
-                <Button size="lg" className="rounded-full px-6">
+                <Button size="lg" className="rounded-full px-6 shadow-apple-button h-12">
                   <PlusIcon size={18} className="mr-2" />
                   Record a Meeting
                 </Button>
@@ -117,7 +118,7 @@ const Index = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="rounded-full px-6"
+                className="rounded-full px-6 h-12 border-gray-200 dark:border-gray-800"
                 onClick={() => setShowExtensionPreview(!showExtensionPreview)}
               >
                 {showExtensionPreview ? "Hide Extension Preview" : "Show Extension Preview"}
@@ -126,7 +127,7 @@ const Index = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="rounded-full px-6"
+                className="rounded-full px-6 h-12 border-gray-200 dark:border-gray-800"
                 onClick={() => setShowCrmPreview(!showCrmPreview)}
               >
                 <Database size={18} className="mr-2" />
@@ -136,7 +137,7 @@ const Index = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="rounded-full px-6"
+                className="rounded-full px-6 h-12 border-gray-200 dark:border-gray-800"
                 onClick={() => setShowKnowledgePreview(!showKnowledgePreview)}
               >
                 <BrainCircuit size={18} className="mr-2" />
@@ -151,7 +152,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-12"
+            className="mb-16"
           >
             <ExtensionPreview />
           </motion.div>
@@ -162,7 +163,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-12"
+            className="mb-16"
           >
             <CrmIntegrationPreview />
           </motion.div>
@@ -173,7 +174,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-12"
+            className="mb-16"
           >
             <CompanyKnowledgePreview />
           </motion.div>
@@ -184,16 +185,18 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="mb-12"
+            className="mb-16"
           >
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center">
-                <Clock size={18} className="mr-2 text-blue-600 dark:text-blue-400" />
+                <div className="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-3">
+                  <Clock size={16} className="text-blue-600 dark:text-blue-400" />
+                </div>
                 <h2 className="text-xl font-display font-medium">Upcoming Recordings</h2>
               </div>
               
               <Link to="/recordings?filter=upcoming">
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-800">
                   View All
                 </Button>
               </Link>
@@ -214,12 +217,14 @@ const Index = () => {
         >
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
-              <MicIcon size={18} className="mr-2 text-blue-600 dark:text-blue-400" />
+              <div className="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-3">
+                <MicIcon size={16} className="text-blue-600 dark:text-blue-400" />
+              </div>
               <h2 className="text-xl font-display font-medium">Recent Recordings</h2>
             </div>
             
             <Link to="/recordings">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-800">
                 View All
               </Button>
             </Link>

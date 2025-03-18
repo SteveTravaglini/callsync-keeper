@@ -107,6 +107,14 @@ export default {
 					'100%': { transform: 'scale(0.98)', opacity: '0' },
 					'0%': { transform: 'scale(1)', opacity: '1' },
 				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-5px)' },
+				},
+				'pulse-subtle': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.85' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -117,12 +125,16 @@ export default {
 				'slide-down': 'slide-down 0.25s ease-out',
 				'scale-in': 'scale-in 0.25s ease-out',
 				'scale-out': 'scale-out 0.25s ease-out',
+				'float': 'float 3s ease-in-out infinite',
+				'pulse-subtle': 'pulse-subtle 2s ease-in-out infinite',
 			},
 			boxShadow: {
 				'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
 				'subtle-lg': '0 8px 20px -6px rgba(0, 0, 0, 0.03), 0 6px 8px -4px rgba(0, 0, 0, 0.01)',
 				'glass': '0 4px 20px rgba(0, 0, 0, 0.08)',
 				'neon': '0 0 5px rgba(0, 0, 0, 0.03), 0 0 15px rgba(0, 0, 0, 0.05)',
+				'apple-card': '0 2px 12px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02)',
+				'apple-button': '0 1px 1px rgba(0, 0, 0, 0.04)',
 			},
 			backdropBlur: {
 				xs: '2px',

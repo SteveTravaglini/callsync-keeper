@@ -12,6 +12,7 @@ import RecordingDetails from "./pages/RecordingDetails";
 import Transcript from "./pages/Transcript";
 import NotFound from "./pages/NotFound";
 
+// Create a client
 const queryClient = new QueryClient();
 
 const App = () => (

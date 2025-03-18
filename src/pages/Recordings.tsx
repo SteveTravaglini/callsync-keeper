@@ -102,10 +102,10 @@ const Recordings = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8"
+          className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-10"
         >
           <div>
-            <h1 className="text-2xl font-display font-medium mb-1">Recordings</h1>
+            <h1 className="text-3xl font-display font-medium mb-1 tracking-tight">Recordings</h1>
             <p className="text-gray-600 dark:text-gray-400">
               View and manage all your meeting recordings
             </p>
@@ -114,7 +114,7 @@ const Recordings = () => {
           <Button 
             variant="default" 
             size="sm" 
-            className="rounded-full" 
+            className="rounded-full shadow-apple-button" 
             asChild
           >
             <a href="/join-call">
@@ -128,13 +128,13 @@ const Recordings = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.4 }}
-          className="flex flex-col md:flex-row gap-4 mb-8"
+          className="flex flex-col md:flex-row gap-4 mb-10"
         >
           <div className="relative flex-1 w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
             <Input
               placeholder="Search recordings..."
-              className="pl-10 w-full"
+              className="pl-10 w-full rounded-xl border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm shadow-sm"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -146,10 +146,10 @@ const Recordings = () => {
               value={statusFilter}
               onValueChange={setStatusFilter}
             >
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[180px] rounded-xl border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm shadow-sm">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="rounded-xl">
                 <SelectItem value="all">All Recordings</SelectItem>
                 <SelectItem value="upcoming">Upcoming</SelectItem>
                 <SelectItem value="completed">Completed</SelectItem>
@@ -160,7 +160,7 @@ const Recordings = () => {
         
         {sortedRecordings.length === 0 ? (
           <EmptyState
-            icon={<ArchiveIcon size={32} />}
+            icon={<ArchiveIcon size={32} className="text-gray-400" />}
             title="No recordings found"
             description={searchQuery ? `No recordings matching "${searchQuery}"` : "Try changing your filters or create a new recording"}
             actionLink="/join-call"
