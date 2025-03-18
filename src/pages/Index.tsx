@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import EmptyState from '@/components/EmptyState';
 import RecordingCard from '@/components/RecordingCard';
+import ExtensionPreview from '@/components/ExtensionPreview';
 import { Recording } from '@/lib/types';
 import { PlusIcon, MicIcon, Clock, ListFilter } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -45,6 +46,7 @@ const mockRecordings: Recording[] = [
 
 const Index = () => {
   const [recordings, setRecordings] = useState<Recording[]>(mockRecordings);
+  const [showExtensionPreview, setShowExtensionPreview] = useState(false);
   
   const hasRecordings = recordings.length > 0;
   
@@ -101,6 +103,7 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
+              className="flex flex-wrap justify-center gap-4"
             >
               <Link to="/join-call">
                 <Button size="lg" className="rounded-full px-6">
@@ -108,9 +111,29 @@ const Index = () => {
                   Record a Meeting
                 </Button>
               </Link>
+              
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="rounded-full px-6"
+                onClick={() => setShowExtensionPreview(!showExtensionPreview)}
+              >
+                {showExtensionPreview ? "Hide Extension Preview" : "Show Extension Preview"}
+              </Button>
             </motion.div>
           </div>
         </motion.div>
+        
+        {showExtensionPreview && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-12"
+          >
+            <ExtensionPreview />
+          </motion.div>
+        )}
         
         {upcomingRecordings.length > 0 && (
           <motion.section 
