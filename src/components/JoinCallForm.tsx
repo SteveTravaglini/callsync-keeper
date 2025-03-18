@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { JoinCallParams, MeetingType, CalendarType } from '@/lib/types';
-import { CalendarIcon, Link as LinkIcon, PlayCircle, Calendar, Clock, CalendarCheck, CalendarDays } from 'lucide-react';
+import { CalendarIcon, Link as LinkIcon, PlayCircle, Calendar, Clock, CalendarCheck, CalendarDays, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
