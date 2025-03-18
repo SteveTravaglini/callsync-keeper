@@ -17,11 +17,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { JoinCallParams, MeetingType } from '@/lib/types';
-import { CalendarIcon, Link as LinkIcon, PlayCircle, Calendar, Clock } from 'lucide-react';
+import { JoinCallParams, MeetingType, CalendarType } from '@/lib/types';
+import { CalendarIcon, Link as LinkIcon, PlayCircle, Calendar, Clock, CalendarCheck, CalendarDays } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
+import CalendarDialog from './CalendarDialog';
 
 const formSchema = z.object({
   meetingUrl: z.string().url({ message: "Please enter a valid meeting URL" }),
@@ -29,10 +30,14 @@ const formSchema = z.object({
   title: z.string().min(3, { message: "Title must be at least 3 characters" }),
   recordImmediately: z.boolean().default(true),
   scheduleTime: z.string().optional(),
+  calendarIntegration: z.boolean().default(false),
+  autoJoin: z.boolean().default(false),
 });
 
 const JoinCallForm = () => {
   const [isScheduling, setIsScheduling] = useState(false);
+  const [isCalendarConnected, setIsCalendarConnected] = useState(false);
+  const [calendarType, setCalendarType] = useState<CalendarType | null>(null);
   const navigate = useNavigate();
   
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,10 +48,13 @@ const JoinCallForm = () => {
       title: '',
       recordImmediately: true,
       scheduleTime: '',
+      calendarIntegration: false,
+      autoJoin: false,
     },
   });
   
   const recordImmediately = form.watch('recordImmediately');
+  const calendarIntegration = form.watch('calendarIntegration');
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log('Form values:', values);
@@ -57,7 +65,7 @@ const JoinCallForm = () => {
       title: recordImmediately ? "Recording Started" : "Recording Scheduled",
       description: recordImmediately 
         ? "Your meeting is being recorded. You can view it in your recordings."
-        : "Your recording has been scheduled. You'll receive a notification when it starts.",
+        : `Your recording has been scheduled. ${values.autoJoin ? "It will automatically join when the meeting starts." : "You'll receive a notification when it starts."}`,
     });
     
     // Redirect to recordings page
@@ -78,6 +86,12 @@ const JoinCallForm = () => {
       const detectedType = detectMeetingType(url);
       form.setValue('meetingType', detectedType);
     }
+  };
+  
+  const handleCalendarConnect = (type: CalendarType) => {
+    setIsCalendarConnected(true);
+    setCalendarType(type);
+    form.setValue('calendarIntegration', true);
   };
   
   return (
@@ -163,6 +177,42 @@ const JoinCallForm = () => {
                   </FormItem>
                 )}
               />
+              
+              <div className="flex justify-between items-center">
+                <div className="text-sm font-medium">Calendar Integration</div>
+                {!isCalendarConnected ? (
+                  <CalendarDialog onConnect={handleCalendarConnect} />
+                ) : (
+                  <div className="flex items-center text-sm text-green-600 dark:text-green-500">
+                    <Check size={14} className="mr-1" />
+                    {calendarType === 'google' ? 'Google Calendar' : 'Microsoft Outlook'} Connected
+                  </div>
+                )}
+              </div>
+              
+              {isCalendarConnected && (
+                <FormField
+                  control={form.control}
+                  name="autoJoin"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                      <div className="space-y-0.5">
+                        <FormLabel className="text-base">Auto-Join Meetings</FormLabel>
+                        <FormDescription>
+                          Automatically join meetings from your calendar
+                        </FormDescription>
+                      </div>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
               
               <FormField
                 control={form.control}

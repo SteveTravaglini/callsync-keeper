@@ -30,10 +30,24 @@ export type MeetingType = 'zoom' | 'google-meet' | 'microsoft-teams' | 'webex' |
 
 export type RecordingStatus = 'scheduled' | 'recording' | 'processing' | 'completed' | 'failed';
 
+export type CalendarType = 'google' | 'outlook' | 'apple' | 'other';
+
 export interface JoinCallParams {
   meetingUrl: string;
   meetingType: MeetingType;
   title: string;
   recordImmediately: boolean;
   scheduleTime?: string;
+  calendarIntegration?: boolean;
+  calendarType?: CalendarType;
+  autoJoin?: boolean;
+}
+
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  startTime: string;
+  endTime: string;
+  meetingUrl?: string;
+  meetingType?: MeetingType;
 }
