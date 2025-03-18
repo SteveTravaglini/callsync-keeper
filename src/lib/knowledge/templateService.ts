@@ -79,17 +79,22 @@ export const generateContentFromTemplate = async (
   
   let content: any = {};
   
+  // Update switch statement to handle both string and enum values
   switch (template.type) {
     case TemplateType.PROPOSAL:
+    case 'proposal':
       content = generateProposal(companyId);
       break;
     case TemplateType.EXECUTIVE_SUMMARY:
+    case 'summary':
       content = generateExecutiveSummary(companyId);
       break;
     case TemplateType.ROI_ANALYSIS:
+    case 'roi':
       content = generateROIAnalysis(companyId);
       break;
     case TemplateType.IMPLEMENTATION_PLAN:
+    case 'handoff':
       content = generateImplementationPlan(companyId);
       break;
     default:

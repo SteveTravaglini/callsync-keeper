@@ -1,4 +1,3 @@
-
 export interface Recording {
   id: string;
   title: string;
@@ -141,7 +140,7 @@ export interface ContentTemplate {
   id: string;
   name: string;
   description: string;
-  type: 'proposal' | 'roi' | 'handoff' | 'summary' | 'custom';
+  type: TemplateType | string; // Updated to use TemplateType enum
   template: string; // Template with variables like {{company.name}}
   variables: TemplateVariable[];
   createdAt: string;
@@ -169,8 +168,8 @@ export interface GeneratedContent {
 // Add the missing TemplateType enum
 export enum TemplateType {
   PROPOSAL = 'proposal',
-  EXECUTIVE_SUMMARY = 'executive_summary',
-  ROI_ANALYSIS = 'roi_analysis', 
-  IMPLEMENTATION_PLAN = 'implementation_plan',
+  EXECUTIVE_SUMMARY = 'summary', // Changed to match the expected 'summary' string
+  ROI_ANALYSIS = 'roi', // Changed to match the expected 'roi' string
+  IMPLEMENTATION_PLAN = 'handoff', // Changed to match the expected 'handoff' string
   CUSTOM = 'custom'
 }
