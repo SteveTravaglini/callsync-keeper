@@ -9,7 +9,7 @@ interface SubmitButtonProps {
 
 const SubmitButton = ({ recordImmediately, syncToCrm = false }: SubmitButtonProps) => {
   return (
-    <Button type="submit" className="w-full">
+    <Button type="submit" className="w-full rounded-xl h-10 transition-all">
       {recordImmediately ? (
         <>
           <PlayCircle className="mr-2 h-4 w-4" />

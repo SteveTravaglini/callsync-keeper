@@ -8,6 +8,7 @@ import { FileOutput, Wand2 } from 'lucide-react';
 import { ContentTemplate, GeneratedContent } from '@/lib/types';
 import { mockTemplates } from '@/lib/knowledge/mockData';
 import { generateContentFromTemplate } from '@/lib/knowledge/templateService';
+import { Badge } from '@/components/ui/badge';
 
 interface TemplateGeneratorProps {
   companyId: string;
@@ -40,15 +41,15 @@ const TemplateGenerator = ({ companyId, onGenerate }: TemplateGeneratorProps) =>
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="md:col-span-3">
-          <Label htmlFor="template-select">Select a template</Label>
+          <Label htmlFor="template-select" className="text-sm font-medium mb-1.5 block">Select a template</Label>
           <Select
             value={selectedTemplateId}
             onValueChange={setSelectedTemplateId}
           >
-            <SelectTrigger id="template-select">
+            <SelectTrigger id="template-select" className="h-10 rounded-xl">
               <SelectValue placeholder="Choose a template" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="rounded-xl">
               {mockTemplates.map(template => (
                 <SelectItem key={template.id} value={template.id}>
                   {template.name}
@@ -60,7 +61,7 @@ const TemplateGenerator = ({ companyId, onGenerate }: TemplateGeneratorProps) =>
         
         <div className="md:col-span-1 flex items-end">
           <Button 
-            className="w-full" 
+            className="w-full rounded-xl h-10" 
             disabled={!selectedTemplateId || isGenerating}
             onClick={handleGenerate}
           >
@@ -80,13 +81,13 @@ const TemplateGenerator = ({ companyId, onGenerate }: TemplateGeneratorProps) =>
       </div>
       
       {selectedTemplate && (
-        <Card className="p-3 bg-slate-50 dark:bg-slate-900">
-          <p className="text-sm text-slate-600 dark:text-slate-400">{selectedTemplate.description}</p>
-          <div className="mt-2 flex flex-wrap gap-2">
+        <Card className="p-4 rounded-xl bg-muted/50 border-border/30">
+          <p className="text-sm text-muted-foreground">{selectedTemplate.description}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
             {selectedTemplate.variables.map(variable => (
-              <div key={variable.name} className="text-xs px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded-md">
+              <Badge key={variable.name} variant="outline" className="text-xs px-2 py-1 font-normal">
                 {variable.name}
-              </div>
+              </Badge>
             ))}
           </div>
         </Card>

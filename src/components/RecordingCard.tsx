@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Calendar, MoreVertical, FileText, Trash2 } from 'lucide-react';
 import { Recording } from '@/lib/types';
@@ -31,15 +31,15 @@ const getMeetingIcon = (type: string) => {
 const getStatusBadge = (status: string) => {
   switch (status) {
     case 'scheduled':
-      return <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">Scheduled</Badge>;
+      return <Badge variant="warning" className="font-normal">Scheduled</Badge>;
     case 'recording':
-      return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 animate-pulse">Recording</Badge>;
+      return <Badge variant="info" className="font-normal animate-pulse">Recording</Badge>;
     case 'processing':
-      return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Processing</Badge>;
+      return <Badge variant="info" className="font-normal">Processing</Badge>;
     case 'completed':
-      return <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">Completed</Badge>;
+      return <Badge variant="success" className="font-normal">Completed</Badge>;
     case 'failed':
-      return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">Failed</Badge>;
+      return <Badge variant="destructive" className="font-normal">Failed</Badge>;
     default:
       return null;
   }
@@ -73,13 +73,13 @@ const RecordingCard = ({ recording, index }: RecordingCardProps) => {
   
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, duration: 0.3 }}
+      transition={{ delay: index * 0.05, duration: 0.25 }}
     >
       <Link to={`/recording/${recording.id}`}>
-        <Card className="overflow-hidden card-hover">
-          <div className="aspect-video bg-gray-100 dark:bg-gray-800 relative">
+        <Card className="overflow-hidden border-border/40 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+          <div className="aspect-video bg-muted relative">
             {recording.thumbnailUrl ? (
               <img 
                 src={recording.thumbnailUrl} 
@@ -88,7 +88,7 @@ const RecordingCard = ({ recording, index }: RecordingCardProps) => {
                 loading="lazy"
               />
             ) : (
-              <div className="flex items-center justify-center w-full h-full text-4xl">
+              <div className="flex items-center justify-center w-full h-full text-4xl bg-gradient-to-b from-muted to-muted/60">
                 {getMeetingIcon(recording.meetingType)}
               </div>
             )}
@@ -102,14 +102,14 @@ const RecordingCard = ({ recording, index }: RecordingCardProps) => {
                 <DropdownMenuTrigger asChild>
                   <button 
                     onClick={(e) => e.stopPropagation()} 
-                    className="flex items-center justify-center w-8 h-8 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 transition-colors"
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm text-foreground/70 hover:text-foreground transition-colors"
                   >
                     <MoreVertical size={14} />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end" className="w-48 rounded-xl">
                   <DropdownMenuItem 
-                    className="cursor-pointer flex items-center gap-2 text-sm"
+                    className="cursor-pointer flex items-center gap-2 text-sm rounded-lg"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -120,7 +120,7 @@ const RecordingCard = ({ recording, index }: RecordingCardProps) => {
                     <span>View Transcript</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem 
-                    className="cursor-pointer flex items-center gap-2 text-sm text-red-600 focus:text-red-600"
+                    className="cursor-pointer flex items-center gap-2 text-sm text-destructive focus:text-destructive rounded-lg"
                     onClick={handleDelete}
                   >
                     <Trash2 size={14} />
@@ -131,31 +131,31 @@ const RecordingCard = ({ recording, index }: RecordingCardProps) => {
             </div>
           </div>
           
-          <CardContent className="p-4">
+          <div className="p-4">
             <h3 className="font-medium text-base mb-2 truncate">{recording.title}</h3>
             
-            <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
               <div className="flex items-center space-x-4">
                 <div className="flex items-center">
-                  <Calendar size={14} className="mr-1" />
+                  <Calendar size={12} className="mr-1" />
                   <span>{new Date(recording.date).toLocaleDateString()}</span>
                 </div>
                 
                 {recording.duration > 0 && (
                   <div className="flex items-center">
-                    <Clock size={14} className="mr-1" />
+                    <Clock size={12} className="mr-1" />
                     <span>{formatDuration(recording.duration)}</span>
                   </div>
                 )}
               </div>
               
               {recording.transcriptAvailable && (
-                <Badge variant="secondary" className="text-xs">
+                <Badge variant="secondary" className="text-xs font-normal">
                   Transcript
                 </Badge>
               )}
             </div>
-          </CardContent>
+          </div>
         </Card>
       </Link>
     </motion.div>
