@@ -9,6 +9,7 @@ export interface Recording {
   transcriptAvailable: boolean;
   status: RecordingStatus;
   meetingUrl?: string;
+  companyId?: string; // Added company association
 }
 
 export interface Transcript {
@@ -16,6 +17,7 @@ export interface Transcript {
   segments: TranscriptSegment[];
   fullText: string;
   speakers: string[];
+  companyId?: string; // Added company association
 }
 
 export interface TranscriptSegment {
@@ -91,4 +93,75 @@ export interface TranscriptInsight {
     occurrences: number;
     sentiment: number;
   }[];
+}
+
+// New Company Knowledge Base Types
+export interface Company {
+  id: string;
+  name: string;
+  crmId?: string;
+  industry?: string;
+  website?: string;
+  size?: string;
+  contacts?: Contact[];
+  knowledgeBaseId: string;
+}
+
+export interface Contact {
+  id: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  title?: string;
+  companyId: string;
+  crmContactId?: string;
+}
+
+export interface KnowledgeBase {
+  id: string;
+  companyId: string;
+  transcriptIds: string[];
+  emailIds: string[];
+  crmActivityIds: string[];
+  webResearchIds: string[];
+  lastUpdated: string;
+}
+
+export interface KnowledgeSegment {
+  id: string;
+  knowledgeBaseId: string;
+  sourceType: 'transcript' | 'email' | 'crm' | 'web' | 'other';
+  sourceId: string;
+  content: string;
+  date: string;
+  metadata?: Record<string, any>;
+}
+
+export interface ContentTemplate {
+  id: string;
+  name: string;
+  description: string;
+  type: 'proposal' | 'roi' | 'handoff' | 'summary' | 'custom';
+  template: string; // Template with variables like {{company.name}}
+  variables: TemplateVariable[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TemplateVariable {
+  name: string;
+  source: 'company' | 'knowledgeBase' | 'transcript' | 'custom';
+  path: string; // e.g., 'name' for company.name or 'insights.keyPoints[0]'
+  defaultValue?: string;
+}
+
+export interface GeneratedContent {
+  id: string;
+  templateId: string;
+  companyId: string;
+  knowledgeBaseId: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  variables: Record<string, any>; // Actual values used for variables
 }

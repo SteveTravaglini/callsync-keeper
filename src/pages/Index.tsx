@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -7,11 +6,11 @@ import EmptyState from '@/components/EmptyState';
 import RecordingCard from '@/components/RecordingCard';
 import ExtensionPreview from '@/components/ExtensionPreview';
 import CrmIntegrationPreview from '@/components/CrmIntegration/CrmIntegrationPreview';
+import CompanyKnowledgePreview from '@/components/CompanyKnowledge/CompanyKnowledgePreview';
 import { Recording } from '@/lib/types';
-import { PlusIcon, MicIcon, Clock, ListFilter, Database } from 'lucide-react';
+import { PlusIcon, MicIcon, Clock, ListFilter, Database, BrainCircuit } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Mock data - in a real app, this would come from an API
 const mockRecordings: Recording[] = [
   {
     id: '1',
@@ -49,6 +48,7 @@ const Index = () => {
   const [recordings, setRecordings] = useState<Recording[]>(mockRecordings);
   const [showExtensionPreview, setShowExtensionPreview] = useState(false);
   const [showCrmPreview, setShowCrmPreview] = useState(false);
+  const [showKnowledgePreview, setShowKnowledgePreview] = useState(false);
   
   const hasRecordings = recordings.length > 0;
   
@@ -132,6 +132,16 @@ const Index = () => {
                 <Database size={18} className="mr-2" />
                 {showCrmPreview ? "Hide CRM Integration" : "Show CRM Integration"}
               </Button>
+              
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="rounded-full px-6"
+                onClick={() => setShowKnowledgePreview(!showKnowledgePreview)}
+              >
+                <BrainCircuit size={18} className="mr-2" />
+                {showKnowledgePreview ? "Hide Knowledge Base" : "Show Knowledge Base"}
+              </Button>
             </motion.div>
           </div>
         </motion.div>
@@ -155,6 +165,17 @@ const Index = () => {
             className="mb-12"
           >
             <CrmIntegrationPreview />
+          </motion.div>
+        )}
+        
+        {showKnowledgePreview && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-12"
+          >
+            <CompanyKnowledgePreview />
           </motion.div>
         )}
         
