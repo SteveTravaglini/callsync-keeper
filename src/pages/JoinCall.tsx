@@ -1,8 +1,10 @@
 
 import Header from '@/components/Header';
 import JoinCallForm from '@/components/JoinCallForm';
+import ExtensionPreview from '@/components/ExtensionPreview';
 import { motion } from 'framer-motion';
 import { Calendar, CalendarDays } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const JoinCall = () => {
   return (
@@ -14,7 +16,7 @@ const JoinCall = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
-          className="max-w-3xl mx-auto"
+          className="max-w-5xl mx-auto"
         >
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
@@ -37,7 +39,20 @@ const JoinCall = () => {
             </div>
           </motion.div>
           
-          <JoinCallForm />
+          <Tabs defaultValue="join-call" className="w-full">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+              <TabsTrigger value="join-call">Join Call</TabsTrigger>
+              <TabsTrigger value="extension">Calendar Extension</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="join-call">
+              <JoinCallForm />
+            </TabsContent>
+            
+            <TabsContent value="extension">
+              <ExtensionPreview />
+            </TabsContent>
+          </Tabs>
         </motion.div>
       </div>
     </div>
