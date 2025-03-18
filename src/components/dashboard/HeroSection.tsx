@@ -1,6 +1,6 @@
 
 import { motion } from 'framer-motion';
-import { PlusIcon } from 'lucide-react';
+import { PlusIcon, Database, BrainCircuit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
